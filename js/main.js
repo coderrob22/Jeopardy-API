@@ -34,6 +34,44 @@ function initBoard(){
         board.appendChild(row)
 }
 }
+//Declare Random Integer
+function randInt(){
+    return Math.floor(Math.random() * (18418) + 1)
+}
+let catArray= []
+function buildCategoriesRow(){
+    const fetchRequest1 = fetch(
+        `https://jservice.io/api/category?&id=${randInt()}`)
+        .then((response)=>response.json());
+
+     const fetchRequest2= fetch(
+        `https://jservice.io/api/category?&id=${randInt()}`)
+        .then((response)=>response.json());
+
+    const fetchRequest3= fetch(
+        `https://jservice.io/api/category?&id=${randInt()}`)
+        .then((response)=>response.json());
+
+    const fetchRequest4= fetch(
+        `https://jservice.io/api/category?&id=${randInt()}`)
+        .then((response)=>response.json());
+    
+    const fetchRequest5= fetch(
+        `https://jservice.io/api/category?&id=${randInt()}`)
+        .then((response)=>response.json());
+    
+    const fetchRequest6= fetch(
+        `https://jservice.io/api/category?&id=${randInt()}`)
+        .then((response)=>response.json());
+        
+        const allQuestions= Promise.all([fetchRequest1,fetchRequest2,fetchRequest3,fetchRequest4,fetchRequest5,fetchRequest6])
+
+
+
+    allQuestions.then((response)=>{console.log(response)
+        catArray= response})
+}
+
 function getClue(){
     console.log('Time for a clue!')
 }
