@@ -22,28 +22,39 @@ span{
     flex-direction: column;
     width: 75vw;
     margin: 10px auto;
-    border: 2px solid red;
 }
 #category-row{
     display: flex;
     align-items:center;
     margin-bottom: 20px;
-    border: 2px solid orange;
 }
 #clue-board{
     flex-direction: column;
-    border: 2px solid blue
 }
 .clue-box{
     display: flex;
-    border: 2px solid green;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid white;
     border-radius: 5px;
     margin: 5px;
     height: 100px;
-    flex: 1
+    flex: 1;
+    background-color: blue; 
+    font-weight: bold;
+    font-size: 2rem;
+    text-transform: uppercase;
+
 }
 .clue-row{
     display: flex;
-    border: 2px solid orange;
+
     
+}
+.category-box{
+    font-size: .8rem;
+    line-height: 25px;
+}
+.clicked-box{
+    font-size: 1rem;
 }
