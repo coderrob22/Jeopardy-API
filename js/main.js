@@ -43,8 +43,15 @@ function initBoard(){
 function randInt(){
     return Math.floor(Math.random() * (20418) + 1)
 }
+
+//FETCH responses from API
 let catArray= []
 function buildCategoriesRow(){
+
+    if (!(document.getElementById('category-row').firstChild.innerText== '')){
+        resetBoard()
+    }
+
     const fetchRequest1 = fetch(
         `https://jservice.io/api/category?&id=${randInt()}`)
         .then((response)=>response.json());
@@ -101,4 +108,48 @@ function getClue (event){
     let clue= cluesList.find(obj =>{
         return obj.value == boxValue
     })
+    showQuestion(clue, child, boxValue)
+}
+// SHOW the quesiton and get player's answer
+function showQuestion(clue, target, boxValue){
+    let userAnswer = prompt(clue.question).toLowerCase()
+    let answer = clue.answer.toLowerCase().replace(/<\/?[^>]+(>\$)/g, "")
+    let possiblePoints= +(boxValue)
+    target.innerHTML=clue.answer
+    target.removeEventListener('click', getClue, false)
+    evaluateAnswer(userAnswer, answer, possiblePoints)
+}
+
+//Evaluate Correct Answer!
+function evaluateAnswer(userAnswer, answer, possiblePoints){
+    let checkAnswer =(userAnswer==answer)? 'correct' : 'incorrect'
+    let confirmAnswer= 
+    confirm(`For $${possiblePoints}, you answered "${userAnswer}". The correct answer was "${answer}. Your answer appears to be $${checkAnswer}. Click OK to accept or click Cancel if th eanswer was not properly evaluated. `)
+    awardPoints(checkAnswer, confirmAnswer, possiblePoints)
+}
+
+//Award Points
+function awardPoints(checkAnswer, confirmAnswer, possiblePoints){
+    if (!(checkAnswer=='incorrect' && confirmAnswer == true)){
+        let target= document.getElementById('score')
+        let currentScore= +(target.innerText)
+        currentScore += possiblePoints
+        target.innerText = currentScore
+    }else{
+        alert(`No points given.`)
+    }
+}
+// Reset Board IF NEEDED
+function resetBoard(){
+    let clueParent = document.getElementById('clue-board')
+    while (clueParent.firstChild){
+        clueParent.removeChild(clueParent.firstChild)
+    }
+    let catParent= document.getElementById('category-row')
+    while (catParent.firstChild){
+        catParent.removeChild(catParent.firstChild)
+    }
+    document.getElementById('score').innerText= 0
+    initBoard()
+    initCatRow()
 }
